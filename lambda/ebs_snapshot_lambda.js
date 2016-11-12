@@ -1,6 +1,6 @@
 var Promise = require('bluebird');
 
-var ebs = require('./ebs.js');
+var ebs = require('./ebs');
 
 var handler = function* (event, context) {
   try {
@@ -18,5 +18,5 @@ exports.handler = Promise.coroutine(handler);
 //Uncomment below to test locally
 exports.handler(null, {
   done: function(e, s) { console.log(s); },
-  error: function(e, ex) { console.log(ex);}
+  error: function(e, ex) { console.log(ex); }
 });
