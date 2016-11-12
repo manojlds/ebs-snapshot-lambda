@@ -9,7 +9,7 @@ var getPurgeDate = function(tags) {
   var purgeDate = new Date();
   purgeDate.setTime(purgeDate.getTime() + (tags['Retention'] || config.defaultRetention) * 86400000 );
   
-  return purgeDate;
+  return utils.getDate(purgeDate);
 };
 
 var createSnapshot = function(volumeId) {
@@ -34,7 +34,7 @@ var tagSnapshot = function(volume, snapshotId) {
       },
       {
         Key: 'PurgeDate',
-        Value: purgeDate.toISOString().split('T')[0]
+        Value: purgeDate
       },
     ],
     DryRun: false
@@ -60,7 +60,6 @@ var snapshotVolumes = function () {
     .promise()
     .then(function(data) {
       return data.Volumes.map(function(volume) {
-        
         return createSnapshot(volume.VolumeId)
           .then(function(data) {
             return tagSnapshot(volume, data.SnapshotId);
@@ -71,4 +70,35 @@ var snapshotVolumes = function () {
     return Promise.all(snapshotPromises);
 };
 
+var deleteSnapshot = function(snapshotId) {
+  var params = {
+    SnapshotId: snapshotId,
+    DryRun: false
+  };
+  return ec2.deleteSnapshot(params).promise();
+};
+
+var purgeSnapshots = function() {
+  var today = utils.getDate(new Date());
+  var snapshotsParams = {
+    DryRun: false,
+    Filters: [
+      {
+        Name: "tag:PurgeDate",
+        Values: [today]
+      },
+    ]
+  };
+  
+  var snapshotDeletePromises = ec2.describeSnapshots(snapshotsParams).promise()
+    .then(function(data) {
+      return data.Snapshots.map(function(snapshot) {
+        return deleteSnapshot(snapshot.SnapshotId);
+      });
+    });
+    
+  return Promise.all(snapshotDeletePromises);
+};
+
 exports.snapshotVolumes = snapshotVolumes;
+exports.purgeSnapshots = purgeSnapshots;

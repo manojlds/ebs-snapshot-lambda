@@ -15,6 +15,11 @@ var getTags = function(tags) {
   }, {});
 }
 
+var getDate = function(date) {
+  return date.toISOString().split('T')[0];
+}
+
 exports.getRegion = getRegion;
 exports.getRegionObject = getRegionObject;
 exports.getTags = getTags;
+exports.getDate = getDate;

@@ -6,6 +6,7 @@ var handler = function* (event, context) {
   try {
     
     yield ebs.snapshotVolumes();
+    yield ebs.purgeSnapshots();
     
     context.done(null, 'Finished');
   } catch(e) {
