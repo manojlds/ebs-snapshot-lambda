@@ -1,0 +1,12 @@
+{
+  "name": "ebs_snapshot_lambda",
+  "version": "0.1.0",
+  "description": "AWS Lambda function to create and purge EBS snapshots",
+  "main": "ebs_snapshot_lambda.js",
+  "scripts": {},
+  "author": "manojlds <manojlds@gmail.com> (https://stacktoheap.com/)",
+  "license": "MIT",
+  "dependencies": {
+    "bluebird": "3.4.1"
+  }
+}
