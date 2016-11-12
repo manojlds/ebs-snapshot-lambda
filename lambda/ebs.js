@@ -24,6 +24,12 @@ var createSnapshot = function(volumeId) {
 var tagSnapshot = function(volume, snapshotId) {
   var tags = utils.getTags(volume.Tags);
   var purgeDate = getPurgeDate(tags);
+  var additionalTags = [];
+  if(config.copyVolumeTagsToSnapshot) {
+    additionalTags = volume.Tags.filter(function(tag) {
+      return tag.Key !== "Retention" && tag.Key !== "Snapshot";
+    })
+  }
 
   var snapshotTagParams = {
     Resources: [snapshotId],
@@ -36,7 +42,7 @@ var tagSnapshot = function(volume, snapshotId) {
         Key: 'PurgeDate',
         Value: purgeDate
       },
-    ],
+    ].concat(additionalTags),
     DryRun: false
   };
   

@@ -1,3 +1,4 @@
 {
-  "defaultRetention": 7
+  "defaultRetention": 7,
+  "copyVolumeTagsToSnapshot": true
 }
