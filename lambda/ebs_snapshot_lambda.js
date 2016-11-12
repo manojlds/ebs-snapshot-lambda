@@ -2,22 +2,25 @@ var Promise = require('bluebird');
 
 var ebs = require('./ebs');
 
-var handler = function* (event, context) {
+var handler = function* (event, context, callback) {
   try {
     
     yield ebs.snapshotVolumes();
     yield ebs.purgeSnapshots();
     
-    context.done(null, 'Finished');
+    callback(null, 'Finished');
   } catch(e) {
-    context.error('Error',  e);
+    callback('Error',  e);
   }
 };
 
 exports.handler = Promise.coroutine(handler);
 
 //Uncomment below to test locally
-exports.handler(null, {
-  done: function(e, s) { console.log(s); },
-  error: function(e, ex) { console.log(ex); }
-});
+// exports.handler(null, null, function(e, s) {
+//   if(e) {
+//     console.log("ERROR!" + e);
+//   }
+//   
+//   console.log(s);
+// });
