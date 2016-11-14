@@ -28,3 +28,7 @@ Once `lambda/config.json` has been edited as required, run `npm install --produc
 
 The repo also comes with terraform plans to setup and install the lambda function, along with the required schedules and IAM role/policy. Verify with `terraform plan` and deploy with `terraform apply`.
 
+## License
+
+This is an open source project licensed under the [Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0).
+
