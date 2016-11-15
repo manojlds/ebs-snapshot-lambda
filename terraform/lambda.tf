@@ -39,7 +39,7 @@ resource "aws_lambda_function" "ebs_snapshot_lambda" {
 }
 
 resource "aws_cloudwatch_event_rule" "lambda_schedule" {
-  name = "lambda_schedule"
+  name = "lambda_schedule_ebs_snapshot_lambda"
   description = "Lambda Schedule"
   schedule_expression = "rate(${var.lamba_schedue})"
 }
