@@ -3,16 +3,14 @@
 set -e
 
 CURRENT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-DIST_DIR="${CURRENT_DIR}/../../dist"
-LAMBDA_DIR="${CURRENT_DIR}/../../lambda"
-
-rm -rf "${DIST_DIR}"
-mkdir "${DIST_DIR}"
+LAMBDA_DIR="$1"
 
 pushd "${LAMBDA_DIR}"
-rm -rf ebs_snapshot_lambda-*.tgz package/
+rm -rf ebs_snapshot_lambda-*.tgz
 npm pack
-tar xvf ebs_snapshot_lambda-*.tgz
 
+pushd "$2"
+rm -rf package/
+tar xvf ${LAMBDA_DIR}/ebs_snapshot_lambda-*.tgz
 pushd package/
 npm install --production

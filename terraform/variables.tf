@@ -12,7 +12,7 @@ variable "lambda_source_dir" {
 }
 
 variable "lambda_prepared_source_dir" {
-  default = "../lambda/package"
+  default = "../lambda"
 }
 
 variable "lambda_archive_path" {
