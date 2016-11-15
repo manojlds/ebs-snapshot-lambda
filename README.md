@@ -28,6 +28,19 @@ Once `lambda/config.json` has been edited as required, run `npm install --produc
 
 The repo also comes with terraform plans to setup and install the lambda function, along with the required schedules and IAM role/policy. Verify with `terraform plan` and deploy with `terraform apply`.
 
+#### Using as a module
+
+The terraform plans can also be used as a module within your existing terraform project. Add as a module with something like below:
+
+```hcl
+module "ebs-backup" {
+  source = "github.com/manojlds/ebs-snapshot-lambda//terraform"
+
+  lambda_prepared_source_dir = "${path.root}/ebs-backup-temp/source"
+  lambda_archive_path = "${path.root}/ebs-backup-temp/dist/ebs_snapshot_lambda.zip"
+}
+```
+
 ## License
 
 This is an open source project licensed under the [Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0).
