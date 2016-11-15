@@ -1,17 +1,17 @@
 resource "null_resource" "ebs_snapshot_lambda" {
   triggers = {
-    package_json = "${base64sha256(file("${path.root}/../lambda/package.json"))}"
+    package_json = "${base64sha256(file("${var.lambda_source_dir}/package.json"))}"
   }
 
   provisioner "local-exec" {
-    command = "bash ${path.root}/scripts/setup.sh"
+    command = "bash ${path.module}/scripts/setup.sh"
   }
 }
 
 data "archive_file" "ebs_snapshot_lambda" {
   type = "zip"
-  source_dir = "../lambda/package"
-  output_path = "../dist/ebs_snapshot_lambda.zip"
+  source_dir = "${var.lambda_prepared_source_dir}"
+  output_path = "${var.lambda_archive_path}"
 
   depends_on = ["null_resource.ebs_snapshot_lambda"]
 }
