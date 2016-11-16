@@ -41,6 +41,15 @@ module "ebs-backup" {
 }
 ```
 
+## Limitations
+
+The lambda has following limitations / assumptions / compromises. Happy to hear suggestions or PRs addressing these:
+
+- Will not work for large number of volumes. AWS API limits and Lambda runtime limits are not take into account yet. I plan to add a "bulk" version that can handle 10s or 100s of volumes.
+- Assumes that snapshot is taken once a day. The unit is days and not hours. Will not work correctly for taking snapshots for, say, every 6 hours - will purge all the snapshots at once after the retention days.
+- The lambda will create snapshots twice if it is triggered twice irrespective of whether snasphot was already taken for the day.
+
+
 ## License
 
 This is an open source project licensed under the [Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0).
