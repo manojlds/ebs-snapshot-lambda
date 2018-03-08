@@ -4,7 +4,7 @@ variable "max_retries" {
 variable "aws_region" {
   default = "us-east-1"
 }
-variable "lamba_schedue" {
+variable "lambda_schedule" {
   default = "1 day"
 }
 variable "lambda_source_dir" {
