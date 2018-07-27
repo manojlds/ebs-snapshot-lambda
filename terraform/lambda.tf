@@ -63,7 +63,7 @@ resource "aws_cloudwatch_event_target" "ebs_snapshot_lambda_schedule" {
 
 resource "aws_cloudwatch_event_target" "ebs_purge_lambda_schedule" {
   rule      = "${aws_cloudwatch_event_rule.lambda_schedule.name}"
-  target_id = "ebs_snapshot_lambda"
+  target_id = "ebs_purge_lambda"
   arn       = "${aws_lambda_function.ebs_purge_lambda.arn}"
 }
 
