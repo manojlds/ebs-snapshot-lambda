@@ -4,8 +4,7 @@ var ebs = require('./ebs');
 
 var handler = function* (event, context, callback) {
   try {
-    
-    yield ebs.snapshotVolumes();
+    yield ebs.purgeSnapshots();
     
     callback(null, 'Finished');
   } catch(e) {
